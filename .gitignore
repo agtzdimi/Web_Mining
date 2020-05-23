@@ -41,3 +41,7 @@ testem.log
 Thumbs.db
 
 .env
+
+node_modules/
+
+web-mining-gui/node_modules
