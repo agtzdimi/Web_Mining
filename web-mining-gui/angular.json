@@ -136,7 +136,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
             "typeCheck": true,
             "exclude": []
           }
@@ -158,7 +161,9 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
             "exclude": []
           }
         }
@@ -174,5 +179,8 @@
     "@schematics/angular:directive": {
       "prefix": "ngx"
     }
+  },
+  "cli": {
+    "analytics": "dda5c0db-139a-481e-872f-e60f90488904"
   }
 }
