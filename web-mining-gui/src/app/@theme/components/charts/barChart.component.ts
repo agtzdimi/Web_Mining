@@ -1,10 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: "ngx-bar-chart",
+  selector: 'ngx-bar-chart',
   template: `
     <div echarts [options]="options" class="echart"></div>
-  `
+  `,
 })
 export class BarChartComponent implements OnChanges {
   @Input() barData;
@@ -22,53 +22,53 @@ export class BarChartComponent implements OnChanges {
   afterDataRecieved() {
     this.options = {
       tooltip: {
-        trigger: "axis",
+        trigger: 'axis',
         axisPointer: {
-          type: "cross",
+          type: 'cross',
           label: {
-            backgroundColor: "grey"
-          }
-        }
+            backgroundColor: 'grey',
+          },
+        },
       },
       grid: {
-        left: "3%",
-        right: "4%",
-        bottom: "3%",
-        containLabel: true
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
       },
-      barWidth: "40%",
+      barWidth: '40%',
       itemStyle: {
-        color: "#cccccc"
+        color: '#cccccc',
       },
       xAxis: {
-        type: "category",
+        type: 'category',
         data: this.titles,
         axisLine: {
           lineStyle: {
-            color: "white"
-          }
+            color: 'white',
+          },
         },
         axisLabel: {
-          color: "white",
+          color: 'white',
           textStyle: {
-            color: "white"
-          }
-        }
+            color: 'white',
+          },
+        },
       },
       yAxis: {
-        type: "value",
-        name: "Watt",
+        type: 'value',
+        name: 'Watt',
         axisLine: {
           lineStyle: {
-            color: "white"
-          }
+            color: 'white',
+          },
         },
         axisLabel: {
-          color: "white",
+          color: 'white',
           textStyle: {
-            color: "white"
-          }
-        }
+            color: 'white',
+          },
+        },
       },
       series: [
         {
@@ -78,35 +78,35 @@ export class BarChartComponent implements OnChanges {
               color: function(params) {
                 // build a color map as your need.
                 const colorList = [
-                  "#C1232B",
-                  "#B5C334",
-                  "#FCCE10",
-                  "#E87C25",
-                  "#27727B",
-                  "#FE8463",
-                  "#9BCA63",
-                  "#FAD860",
-                  "#F3A43B",
-                  "#60C0DD",
-                  "#D7504B",
-                  "#C6E579",
-                  "#F4E001",
-                  "#F0805A",
-                  "#26C0C0"
+                  '#C1232B',
+                  '#B5C334',
+                  '#FCCE10',
+                  '#E87C25',
+                  '#27727B',
+                  '#FE8463',
+                  '#9BCA63',
+                  '#FAD860',
+                  '#F3A43B',
+                  '#60C0DD',
+                  '#D7504B',
+                  '#C6E579',
+                  '#F4E001',
+                  '#F0805A',
+                  '#26C0C0',
                 ];
                 return colorList[params.dataIndex];
               },
               label: {
                 show: false,
-                position: "top",
-                formatter: "{b}\n{c}"
-              }
-            }
+                position: 'top',
+                formatter: '{b}\n{c}',
+              },
+            },
           },
-          barStyle: { color: "#d5ceeb" },
-          type: "bar"
-        }
-      ]
+          barStyle: { color: '#d5ceeb' },
+          type: 'bar',
+        },
+      ],
     };
   }
 }

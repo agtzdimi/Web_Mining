@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "ngx-footer",
-  styleUrls: ["./footer.component.scss"],
+  selector: 'ngx-footer',
+  styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
       Created with ♥ by <b>Dimitrios Agtzidis</b>,
@@ -17,6 +17,6 @@ import { Component } from "@angular/core";
         class="ion ion-social-github"
       ></a>
     </div>
-  `
+  `,
 })
 export class FooterComponent {}

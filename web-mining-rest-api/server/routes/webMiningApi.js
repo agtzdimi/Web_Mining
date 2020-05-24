@@ -1,12 +1,11 @@
 "use strict";
 const shell = require("shelljs");
 
-const { mongoIP, mongoPort } = require("../bin/www");
+const { mongoURI } = require("../bin/www");
 // Connection URL
 const MongoDbHelper = require("./MongoDbHelper");
-let url = "mongodb://" + mongoIP + ":" + mongoPort;
-console.log(url);
-let mongoDbHelper = new MongoDbHelper(url);
+console.log(mongoURI);
+let mongoDbHelper = new MongoDbHelper(mongoURI);
 
 // start connection
 mongoDbHelper.start(() => {
