@@ -55,7 +55,7 @@ export class BarChartComponent implements OnChanges {
       },
       yAxis: {
         type: "value",
-        name: "Number of Posts",
+        name: "No. of Posts",
         axisLine: {
           lineStyle: {
             color: "white",
