@@ -1,11 +1,11 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { NbIconLibraries } from "@nebular/theme";
-import { MENU_ITEMS } from "./pages-menu";
+import { NbIconLibraries } from '@nebular/theme';
+import { MENU_ITEMS } from './pages-menu';
 
 @Component({
-  selector: "ngx-pages",
-  styleUrls: ["pages.component.scss"],
+  selector: 'ngx-pages',
+  styleUrls: ['pages.component.scss'],
   template: `
     <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
@@ -15,17 +15,17 @@ import { MENU_ITEMS } from "./pages-menu";
 })
 export class PagesComponent {
   constructor(private iconLibraries: NbIconLibraries) {
-    this.iconLibraries.registerFontPack("fas", {
-      iconClassPrefix: "fas",
-      packClass: "fas",
+    this.iconLibraries.registerFontPack('fas', {
+      iconClassPrefix: 'fas',
+      packClass: 'fas',
     });
-    this.iconLibraries.registerFontPack("fa", {
-      iconClassPrefix: "fa",
-      packClass: "fa",
+    this.iconLibraries.registerFontPack('fa', {
+      iconClassPrefix: 'fa',
+      packClass: 'fa',
     });
-    this.iconLibraries.registerFontPack("fab", {
-      iconClassPrefix: "fa",
-      packClass: "fab",
+    this.iconLibraries.registerFontPack('fab', {
+      iconClassPrefix: 'fa',
+      packClass: 'fab',
     });
   }
 

@@ -1,6 +1,6 @@
-'use strict';
-const mongodb = require('mongodb').MongoClient;
-const uuid = require('uuid');
+"use strict";
+const mongodb = require("mongodb").MongoClient;
+const uuid = require("uuid");
 
 /*
  http://mongodb.github.io/node-mongodb-native/2.0/tutorials/crud_operations/
@@ -41,7 +41,6 @@ module.exports = class MongoDbHelper {
             resolve(model);
           });
         });
-
       },
 
       update: (find_param, upd_param) => {
@@ -111,7 +110,7 @@ module.exports = class MongoDbHelper {
             resolve(doc);
           });
         });
-      },
+      }
     };
 
     return collection;
