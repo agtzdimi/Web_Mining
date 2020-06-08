@@ -1,11 +1,16 @@
-import { NgModule } from '@angular/core';
-import { NbMenuModule, NbCardModule } from '@nebular/theme';
+import { NgModule } from "@angular/core";
+import {
+  NbMenuModule,
+  NbCardModule,
+  NbIconComponent,
+  NbIconModule,
+} from "@nebular/theme";
 
-import { ThemeModule } from '../@theme/theme.module';
-import { PagesComponent } from './pages.component';
-import { FormsModule } from '@angular/forms';
-import { PagesRoutingModule } from './pages-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ThemeModule } from "../@theme/theme.module";
+import { PagesComponent } from "./pages.component";
+import { FormsModule } from "@angular/forms";
+import { PagesRoutingModule } from "./pages-routing.module";
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
 @NgModule({
   imports: [
@@ -13,6 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ThemeModule,
     FormsModule,
     NbMenuModule,
+    NbIconModule,
     NbCardModule,
   ],
   declarations: [PagesComponent, DashboardComponent],

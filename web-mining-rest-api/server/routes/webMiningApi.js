@@ -52,3 +52,21 @@ exports.insertDocument = (req, res) => {
     });
   }
 };
+
+exports.retrieveData = (req, res) => {
+  mongoDbHelper
+    .collection("twitter")
+    .find({})
+    .then(twitter => {
+      mongoDbHelper
+        .collection("instagram")
+        .find({})
+        .then(insta => {
+          res.json({
+            status: "success",
+            twitter: twitter,
+            instagram: insta
+          });
+        });
+    });
+};

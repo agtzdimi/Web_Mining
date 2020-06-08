@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { NbIconLibraries } from '@nebular/theme';
-import { MENU_ITEMS } from './pages-menu';
+import { NbIconLibraries } from "@nebular/theme";
+import { MENU_ITEMS } from "./pages-menu";
 
 @Component({
-  selector: 'ngx-pages',
-  styleUrls: ['pages.component.scss'],
+  selector: "ngx-pages",
+  styleUrls: ["pages.component.scss"],
   template: `
     <ngx-one-column-layout>
       <nb-menu [items]="menu"></nb-menu>
@@ -15,16 +15,17 @@ import { MENU_ITEMS } from './pages-menu';
 })
 export class PagesComponent {
   constructor(private iconLibraries: NbIconLibraries) {
-    this.iconLibraries.registerSvgPack('open-adr', {
-      ven:
-        '<img src="assets/images/icon_vens.png" style="width: 2.5em; margin-left: -1.1rem">',
-      vtn:
-        '<img src="assets/images/icon_vtn.png" style="width: 2.5em; margin-left: -1.1rem">',
-      // ...
+    this.iconLibraries.registerFontPack("fas", {
+      iconClassPrefix: "fas",
+      packClass: "fas",
     });
-    this.iconLibraries.registerFontPack('font-awesome', {
-      iconClassPrefix: 'fa',
-      packClass: 'fa',
+    this.iconLibraries.registerFontPack("fa", {
+      iconClassPrefix: "fa",
+      packClass: "fa",
+    });
+    this.iconLibraries.registerFontPack("fab", {
+      iconClassPrefix: "fa",
+      packClass: "fab",
     });
   }
 

@@ -1,5 +1,56 @@
 <div class="row">
   <div class="col-xxl-12">
+    <div class="row" *ngIf="data">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-4 centralize">
+            <nb-card>
+              <div class="icon-container centralize">
+                <div class="icon status-primary">
+                  <nb-icon icon="twitter" pack="fab"></nb-icon>
+                </div>
+              </div>
+              <div class="details">
+                <div class="title h5">Twitter Posts</div>
+                <div class="status paragraph-2 centralize">
+                  {{ data["twitter"].length }}
+                </div>
+              </div>
+            </nb-card>
+          </div>
+
+          <div class="col-md-4 centralize">
+            <nb-card>
+              <div class="icon-container centralize">
+                <div class="icon status-primary">
+                  <nb-icon icon="instagram" pack="fab"></nb-icon>
+                </div>
+              </div>
+              <div class="details">
+                <div class="title h5">Instagram Posts</div>
+                <div class="status paragraph-2 centralize">
+                  {{ data["instagram"].length }}
+                </div>
+              </div>
+            </nb-card>
+          </div>
+
+          <div class="col-md-4 centralize">
+            <nb-card>
+              <div class="icon-container centralize">
+                <div class="icon status-primary">
+                  <nb-icon icon="hashtag" pack="fa"></nb-icon>
+                </div>
+              </div>
+              <div class="details">
+                <div class="title h5">Hashtag Searched</div>
+                <div class="status paragraph-2">#Immigration</div>
+              </div>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-12">
         <nb-card class="cards-container" size="large">

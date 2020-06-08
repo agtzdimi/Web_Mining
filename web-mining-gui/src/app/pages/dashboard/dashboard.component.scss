@@ -1,4 +1,4 @@
-@import '../../@theme/styles/themes.scss';
+@import "../../@theme/styles/themes.scss";
 
 i {
   color: nb-theme(color-info-400);
@@ -9,4 +9,80 @@ label {
   font-style: italic;
   position: relative;
   text-decoration-color: black;
+}
+
+@include nb-install-component() {
+  nb-card {
+    .icon-container {
+      height: 100%;
+      padding: 0.625rem;
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 5.75rem;
+      height: 4.75rem;
+      font-size: 3.75rem;
+      border-radius: nb-theme(card-border-radius);
+      transition: width 0.4s ease;
+      transform: translate3d(0, 0, 0);
+      color: nb-theme(text-control-color);
+
+      @each $status in nb-get-statuses() {
+        &.status-#{$status} {
+          $left-color: nb-theme(button-hero-#{$status}-left-background-color);
+          $right-color: nb-theme(button-hero-#{$status}-right-background-color);
+          background-image: linear-gradient(
+            to right,
+            $left-color,
+            $right-color
+          );
+
+          &:hover {
+            $left-hover-color: nb-theme(
+              button-hero-#{$status}-hover-left-background-color
+            );
+            $right-hover-color: nb-theme(
+              button-hero-#{$status}-hover-right-background-color
+            );
+            background-image: linear-gradient(
+              to right,
+              $left-hover-color,
+              $right-hover-color
+            );
+          }
+        }
+      }
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      @include nb-ltr(padding, 0 0.5rem 0 0.75rem);
+      @include nb-rtl(padding, 0 0.75rem 0 0.5rem);
+      border-left: 1px solid transparent;
+    }
+
+    .title {
+      margin: 0;
+    }
+
+    .status {
+      text-transform: uppercase;
+    }
+  }
+}
+
+nb-icon {
+  font-size: 2.25rem;
+}
+
+.centralize {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

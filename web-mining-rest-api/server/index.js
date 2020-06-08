@@ -61,6 +61,7 @@ app.use(fileUpload({}));
 
 /* API Endpoints */
 app.get("/web-mining/rest/api/v1/insert_document", webMiningApi.insertDocument);
+app.get("/web-mining/rest/api/v1/retrieve_data", webMiningApi.retrieveData);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
