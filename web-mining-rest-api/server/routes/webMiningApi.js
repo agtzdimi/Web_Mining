@@ -62,10 +62,44 @@ exports.retrieveData = (req, res) => {
         .collection("instagram")
         .find({})
         .then(insta => {
+          const userProfileObj = {
+            tweets: []
+          };
+          for (let i = 0; i < twitter.length; i++) {
+            userProfileObj["tweets"].push({
+              username: twitter[i]["username"],
+              screen_name: twitter[i]["screen_name"],
+              description: twitter[i]["description"],
+              user_location: twitter[i]["user_location"],
+              retweet_count: twitter[i]["retweet_count"],
+              text: twitter[i]["text"]
+            });
+          }
+          //const userProfiling = shell.exec("python script.py")
+          const tempUserProfiling = {
+            tweets: [
+              {
+                gender: "male",
+                age_group: "Young",
+                hate_speech: "0"
+              },
+              {
+                gender: "female",
+                age_group: "Middle_aged",
+                hate_speech: "1"
+              },
+              {
+                gender: "female",
+                age_group: "Elder",
+                hate_speech: "1"
+              }
+            ]
+          };
           res.json({
             status: "success",
             twitter: twitter,
-            instagram: insta
+            instagram: insta,
+            userProfiling: tempUserProfiling
           });
         });
     });

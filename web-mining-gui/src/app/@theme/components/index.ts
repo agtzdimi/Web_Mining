@@ -5,5 +5,6 @@ export * from './tiny-mce/tiny-mce.component';
 export * from './charts/lineChart.component';
 export * from './charts/pieChart.component';
 export * from './charts/barChart.component';
+export * from './charts/doubleAxisBarChart.component';
 export * from './charts/graphChart.component';
 export * from './charts/heatmap.component';

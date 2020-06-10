@@ -27,6 +27,7 @@ import {
   LineChartComponent,
   PieChartComponent,
   BarChartComponent,
+  DoubleAxisBarChartComponent,
   GraphChartComponent,
   HeatMapComponent,
 } from './components';
@@ -71,6 +72,7 @@ const COMPONENTS = [
   LineChartComponent,
   HeatMapComponent,
   BarChartComponent,
+  DoubleAxisBarChartComponent,
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,

@@ -7,6 +7,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 export class BarChartComponent implements OnChanges {
   @Input() barData;
   @Input() titles;
+  @Input() axisTitle;
 
   ngOnChanges(changes: SimpleChanges) {
     this.afterDataRecieved();
@@ -56,7 +57,7 @@ export class BarChartComponent implements OnChanges {
       },
       yAxis: {
         type: 'value',
-        name: 'No. of Posts',
+        name: this.axisTitle,
         axisLine: {
           lineStyle: {
             color: 'white',
