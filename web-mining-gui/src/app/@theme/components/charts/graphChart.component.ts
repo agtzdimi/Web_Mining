@@ -12,10 +12,7 @@ import 'mapbox-echarts';
 
 @Component({
   selector: 'ngx-simulation-nodes',
-  providers: [GridCoordinatesService],
-  template: `
-    <div echarts [options]="options" class="echarts"></div>
-  `,
+  template: ` <div echarts [options]="options" class="echarts"></div> `,
 })
 export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data;
@@ -71,25 +68,25 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     // Get minimum and maximum longitude and latitude
     const minLongitude = Math.min.apply(
       Math,
-      this.gridCoords.map(function(o) {
+      this.gridCoords.map(function (o) {
         return o.x;
       }),
     );
     const minLatitude = Math.min.apply(
       Math,
-      this.gridCoords.map(function(o) {
+      this.gridCoords.map(function (o) {
         return o.y;
       }),
     );
     const maxLongitude = Math.max.apply(
       Math,
-      this.gridCoords.map(function(o) {
+      this.gridCoords.map(function (o) {
         return o.x;
       }),
     );
     const maxLatitude = Math.max.apply(
       Math,
-      this.gridCoords.map(function(o) {
+      this.gridCoords.map(function (o) {
         return o.y;
       }),
     );
@@ -118,7 +115,7 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     // Mapbox's parameters
     return {
       center: [this.mapCenter.lng, this.mapCenter.lat],
-      zoom: 3, // 13 = region
+      zoom: 1, // 13 = region
       // bounds: [this.sw.lng, this.sw.lat, this.ne.lng, this.ne.lat],
       roam: true,
       style: 'mapbox://styles/mapbox/light-v10', // stylesheet location
@@ -152,8 +149,8 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         // Base options of all series
         series: [
           {
-            id: 'ElectricGridGraph',
-            name: 'Electric Grid',
+            id: 'SentimentGraph',
+            name: 'Sentiment Graph',
             type: 'graph',
 
             coordinateSystem: 'tmap',
@@ -178,42 +175,25 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
               curveness: 0,
             },
 
-            label: {
-              normal: {
-                show: true,
-                position: 'left',
-                formatter: '{b}', // b = Node's 'name' as it appeared in data array
-                color: 'auto',
-                fontStyle: 'oblique',
-              },
-            },
-
-            edgeLabel: {
-              show: true,
-            },
-
             tooltip: {
               position: 'right',
-              formatter: function(params) {
+              formatter: function (params) {
                 // Initialize label
-                let label = 'NaN';
+                let label = '';
                 if (params.dataType === 'node') {
                   // Nodes' label
                   label =
-                    'Name: ' +
+                    'Tweet No.: ' +
                     params.name +
                     '<br/>' +
-                    'lng: ' +
-                    params.value[0] +
+                    'Country: ' +
+                    params.value[2] +
                     '<br/>' +
-                    'lan: ' +
-                    params.value[1] +
+                    'Top Emotion: ' +
+                    params.value[3] +
                     '<br/>' +
-                    'Power: ' +
-                    params.value[2];
-                } else {
-                  // Edges' label
-                  label = 'Line: ' + params.value;
+                    'Sentiment: ' +
+                    params.value[4];
                 }
 
                 return label;
@@ -230,7 +210,7 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
 
   setData(graphData: any, graphCoord: any, graphLinks: any) {
     // Get slider's values
-    const timeStamp = graphData[0].map(function(o) {
+    const timeStamp = graphData[0].map(function (o) {
       return o.hour;
     });
 
@@ -261,7 +241,9 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         value: [
           graphCoord[node]['x'],
           graphCoord[node]['y'],
-          graphData[node][timeStamp]['voltage'],
+          graphCoord[node]['country'],
+          graphCoord[node]['emotion'],
+          graphCoord[node]['sentiment'],
         ],
       });
     }
@@ -308,51 +290,14 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
       data,
       links,
       // Calculate nodes' symbol's size based on its value
-      symbolSize: function(v) {
-        // minimum and maximum values of the symbol
-        const symbolRange = [10, 30];
-        // Get minimum and maximum values of the graph for the specific timeStamp
-        const symbolMax = Math.max.apply(
-          Math,
-          data.map(function(o) {
-            return o.value[2];
-          }),
-        );
-        const symbolMin = Math.min.apply(
-          Math,
-          data.map(function(o) {
-            return o.value[2];
-          }),
-        );
-        // [a, b] => (b - a) * (x - min(x)) / (max(x) - min(x)) + a
-        const nodesSize = Math.round(
-          ((symbolRange[1] - symbolRange[0]) * (v[2] - symbolMin)) /
-            (symbolMax - symbolMin) +
-            symbolRange[0],
-        );
-        return nodesSize;
+      symbolSize: function (v) {
+        return 10;
       },
       itemStyle: {
         // Calculate nodes' color based on its value
-        color: function(params) {
-          // Get maximum value of the graph for the specific timeStamp
-          const colorMax = Math.max.apply(
-            Math,
-            data.map(function(o) {
-              return o.value[2];
-            }),
-          );
-          const colorThreshold = 0.8;
+        color: function (params) {
           // Change node's color in case the value is larger than the threshold
-          return params.value[2] > colorThreshold * colorMax
-            ? '#c72c41'
-            : 'darkgrey';
-        },
-      },
-      edgeLabel: {
-        // Set edge's label
-        formatter: function(params) {
-          return String(params.data.lineLoad) + ' Line';
+          return '#c72c41';
         },
       },
     });

@@ -56,7 +56,7 @@
       <div class="col-md-6">
         <nb-card>
           <nb-card-header>
-            User Profiling: Hate Speech based on Users Age
+            Hate Speech Per Demographic Category
           </nb-card-header>
           <nb-card-body>
             <ngx-double-axis-bar-chart
@@ -69,7 +69,7 @@
       <div class="col-md-6">
         <nb-card>
           <nb-card-header>
-            User Profiling: Hate Speech based on Users Gender
+            Hate Speech Per User Gender
           </nb-card-header>
           <nb-card-body>
             <ngx-double-axis-bar-chart
@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="mapDataSet">
       <div class="col-md-12">
         <nb-card class="cards-container" size="large">
           <nb-card-header>

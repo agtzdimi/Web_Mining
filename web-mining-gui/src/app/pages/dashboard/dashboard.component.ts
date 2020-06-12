@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GridCoordinatesService } from '../../@theme/components/charts/gridCoordinates.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -52,14 +53,20 @@ export class DashboardComponent implements OnInit {
   data: any;
   ageBars: (string | number)[][];
   genderBars: (string | number)[][];
+  mapDataSet: boolean = false;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private gridService: GridCoordinatesService,
+  ) {}
 
   ngOnInit() {
     const url = 'http://localhost:9000/web-mining/rest/api/v1/retrieve_data';
     this.httpClient.get(url).subscribe(
       (data) => {
-        // console.log(data);
+        console.log(data);
+        this.gridService.setCordinates(data['userProfiling']['tweets']);
+        this.mapDataSet = true;
         this.data = data;
         for (let i = 0; i < data['userProfiling']['tweets'].length; i++) {
           if (data['userProfiling']['tweets'][i]['age_group'] === 'Young') {
@@ -108,7 +115,7 @@ export class DashboardComponent implements OnInit {
           }
         }
         this.ageBars = [
-          ['age', 'Total', 'No. of Hate', 'No. of Not Hate'],
+          ['age', 'Total', 'Hate Speech', 'Neutral'],
           [
             'Young',
             this.userProfileObj['totalYoung'],
@@ -129,7 +136,7 @@ export class DashboardComponent implements OnInit {
           ],
         ];
         this.genderBars = [
-          ['gender', 'Total', 'No. of Hate', 'No. of Not Hate'],
+          ['gender', 'Total', 'Hate Speech', 'Neutral'],
           [
             'Male',
             this.userProfileObj['totalMale'],

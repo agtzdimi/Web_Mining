@@ -81,17 +81,86 @@ exports.retrieveData = (req, res) => {
               {
                 gender: "male",
                 age_group: "Young",
-                hate_speech: "0"
+                hate_speech: "0",
+                sentiment: {
+                  pred: "neutral",
+                  prob: [0.0, 1.0, 0.0]
+                },
+                emotion: {
+                  pred: ["sadness"],
+                  prob: [
+                    0.238,
+                    0.009,
+                    0.391,
+                    0.171,
+                    0.12,
+                    0.002,
+                    0.052,
+                    0.002,
+                    0.555,
+                    0.0,
+                    0.0
+                  ]
+                },
+                lat: "52.9770408",
+                lon: "-0.0239836",
+                location: "United Kingdom"
               },
               {
                 gender: "female",
                 age_group: "Middle_aged",
-                hate_speech: "1"
+                hate_speech: "1",
+                sentiment: {
+                  pred: "neutral",
+                  prob: [0.0, 1.0, 0.0]
+                },
+                emotion: {
+                  pred: ["sadness"],
+                  prob: [
+                    0.238,
+                    0.009,
+                    0.391,
+                    0.171,
+                    0.12,
+                    0.002,
+                    0.052,
+                    0.002,
+                    0.555,
+                    0.0,
+                    0.0
+                  ]
+                },
+                lat: "51.9770408",
+                lon: "-2.0239836",
+                location: "United Kingdom"
               },
               {
                 gender: "female",
                 age_group: "Elder",
-                hate_speech: "1"
+                hate_speech: "1",
+                sentiment: {
+                  pred: "neutral",
+                  prob: [0.0, 1.0, 0.0]
+                },
+                emotion: {
+                  pred: ["sadness"],
+                  prob: [
+                    0.238,
+                    0.009,
+                    0.391,
+                    0.171,
+                    0.12,
+                    0.002,
+                    0.052,
+                    0.002,
+                    0.555,
+                    0.0,
+                    0.0
+                  ]
+                },
+                lat: "53.9770408",
+                lon: "-1.0239836",
+                location: "United Kingdom"
               }
             ]
           };
