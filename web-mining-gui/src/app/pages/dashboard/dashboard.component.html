@@ -3,7 +3,7 @@
     <div class="row" *ngIf="data">
       <div class="col-md-12">
         <div class="row">
-          <div class="col-md-4 centralize">
+          <div class="col-md-3 centralize">
             <nb-card>
               <div class="icon-container centralize">
                 <div class="icon status-primary">
@@ -13,13 +13,13 @@
               <div class="details">
                 <div class="title h5">Twitter Posts</div>
                 <div class="status paragraph-2 centralize">
-                  {{ data["twitter"].length }}
+                  {{ data["tweets"].length }}
                 </div>
               </div>
             </nb-card>
           </div>
 
-          <div class="col-md-4 centralize">
+          <div class="col-md-3 centralize">
             <nb-card>
               <div class="icon-container centralize">
                 <div class="icon status-primary">
@@ -29,13 +29,13 @@
               <div class="details">
                 <div class="title h5">Instagram Posts</div>
                 <div class="status paragraph-2 centralize">
-                  {{ data["instagram"].length }}
+                  100
                 </div>
               </div>
             </nb-card>
           </div>
 
-          <div class="col-md-4 centralize">
+          <div class="col-md-3 centralize">
             <nb-card>
               <div class="icon-container centralize">
                 <div class="icon status-primary">
@@ -44,7 +44,25 @@
               </div>
               <div class="details">
                 <div class="title h5">Hashtag Searched</div>
-                <div class="status paragraph-2">#Immigration</div>
+                <div class="status paragraph-2" style="text-align: center;">
+                  #Immigration
+                </div>
+              </div>
+            </nb-card>
+          </div>
+
+          <div class="col-md-3 centralize">
+            <nb-card>
+              <div class="icon-container centralize">
+                <div class="icon status-primary">
+                  <nb-icon icon="globe-europe" pack="fa"></nb-icon>
+                </div>
+              </div>
+              <div class="details">
+                <div class="title h5">Countries</div>
+                <div class="status paragraph-2" style="text-align: center;">
+                  {{ countries.length }}
+                </div>
               </div>
             </nb-card>
           </div>
@@ -85,7 +103,7 @@
       <div class="col-md-12">
         <nb-card class="cards-container" size="large">
           <nb-card-header>
-            Migration Graph
+            Spreading of Tweets GIS
           </nb-card-header>
           <nb-card-body>
             <ngx-simulation-nodes></ngx-simulation-nodes>
@@ -95,7 +113,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <nb-card class="cards-container">
           <nb-card-header>
             Migration HeatMap
@@ -104,16 +122,26 @@
             <ngx-heatmap-chart></ngx-heatmap-chart>
           </nb-card-body>
         </nb-card>
-      </div>
-      <div class="col-md-6">
+      </div> -->
+      <div class="col-md-6" *ngIf="mapDataSet">
         <nb-card class="cards-container">
           <nb-card-header>
-            Migration BarChart
+            Total Sentiment
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-pie-chart [seriesData]="pieSeriesData"></ngx-pie-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6" *ngIf="mapDataSet">
+        <nb-card class="cards-container">
+          <nb-card-header>
+            Total Emotion
           </nb-card-header>
           <nb-card-body>
             <ngx-bar-chart
-              [barData]="barChartData"
-              [titles]="barChartTitles"
+              [barData]="barData"
+              [titles]="barTitles"
               [axisTitle]="'No. of Posts'"
             >
             </ngx-bar-chart>
@@ -126,20 +154,27 @@
       <div class="col-md-6">
         <nb-card class="cards-container">
           <nb-card-header>
-            Migration Line Chart
+            Posts Per Date
           </nb-card-header>
           <nb-card-body>
-            <ngx-line-chart [chartPrices]="lineChart"></ngx-line-chart>
+            <ngx-line-chart
+              [chartPrices]="postPerDate"
+              [titles]="dates"
+            ></ngx-line-chart>
           </nb-card-body>
         </nb-card>
       </div>
+
       <div class="col-md-6">
         <nb-card class="cards-container">
           <nb-card-header>
-            Migration PieChart
+            Posts Per Country
           </nb-card-header>
           <nb-card-body>
-            <ngx-pie-chart [seriesData]="pieSeriesData"></ngx-pie-chart>
+            <ngx-line-chart
+              [chartPrices]="countriesLineData"
+              [titles]="postsPerCountry"
+            ></ngx-line-chart>
           </nb-card-body>
         </nb-card>
       </div>

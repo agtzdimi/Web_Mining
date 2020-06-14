@@ -55,121 +55,12 @@ exports.insertDocument = (req, res) => {
 
 exports.retrieveData = (req, res) => {
   mongoDbHelper
-    .collection("twitter")
+    .collection("twitterResults")
     .find({})
-    .then(twitter => {
-      mongoDbHelper
-        .collection("instagram")
-        .find({})
-        .then(insta => {
-          const userProfileObj = {
-            tweets: []
-          };
-          for (let i = 0; i < twitter.length; i++) {
-            userProfileObj["tweets"].push({
-              username: twitter[i]["username"],
-              screen_name: twitter[i]["screen_name"],
-              description: twitter[i]["description"],
-              user_location: twitter[i]["user_location"],
-              retweet_count: twitter[i]["retweet_count"],
-              text: twitter[i]["text"]
-            });
-          }
-          //const userProfiling = shell.exec("python script.py")
-          const tempUserProfiling = {
-            tweets: [
-              {
-                gender: "male",
-                age_group: "Young",
-                hate_speech: "0",
-                sentiment: {
-                  pred: "neutral",
-                  prob: [0.0, 1.0, 0.0]
-                },
-                emotion: {
-                  pred: ["sadness"],
-                  prob: [
-                    0.238,
-                    0.009,
-                    0.391,
-                    0.171,
-                    0.12,
-                    0.002,
-                    0.052,
-                    0.002,
-                    0.555,
-                    0.0,
-                    0.0
-                  ]
-                },
-                lat: "52.9770408",
-                lon: "-0.0239836",
-                location: "United Kingdom"
-              },
-              {
-                gender: "female",
-                age_group: "Middle_aged",
-                hate_speech: "1",
-                sentiment: {
-                  pred: "neutral",
-                  prob: [0.0, 1.0, 0.0]
-                },
-                emotion: {
-                  pred: ["sadness"],
-                  prob: [
-                    0.238,
-                    0.009,
-                    0.391,
-                    0.171,
-                    0.12,
-                    0.002,
-                    0.052,
-                    0.002,
-                    0.555,
-                    0.0,
-                    0.0
-                  ]
-                },
-                lat: "51.9770408",
-                lon: "-2.0239836",
-                location: "United Kingdom"
-              },
-              {
-                gender: "female",
-                age_group: "Elder",
-                hate_speech: "1",
-                sentiment: {
-                  pred: "neutral",
-                  prob: [0.0, 1.0, 0.0]
-                },
-                emotion: {
-                  pred: ["sadness"],
-                  prob: [
-                    0.238,
-                    0.009,
-                    0.391,
-                    0.171,
-                    0.12,
-                    0.002,
-                    0.052,
-                    0.002,
-                    0.555,
-                    0.0,
-                    0.0
-                  ]
-                },
-                lat: "53.9770408",
-                lon: "-1.0239836",
-                location: "United Kingdom"
-              }
-            ]
-          };
-          res.json({
-            status: "success",
-            twitter: twitter,
-            instagram: insta,
-            userProfiling: tempUserProfiling
-          });
-        });
+    .then(results => {
+      res.json({
+        status: "success",
+        tweets: results
+      });
     });
 };

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class GridCoordinatesService {
   private gridCoordinates = [];
@@ -22,14 +22,14 @@ export class GridCoordinatesService {
 
   setCordinates(data) {
     for (let i = 0; i < data.length; i++) {
-      if (data[i]['lat']) {
+      if (data[i]["lat"]) {
         this.gridCoordinates.push({
           name: i.toString(),
-          x: +data[i]['lon'],
-          y: +data[i]['lat'],
-          country: data[i]['location'],
-          emotion: data[i]['emotion']['pred'][0],
-          sentiment: data[i]['sentiment']['pred'],
+          x: +data[i]["lon"],
+          y: +data[i]["lat"],
+          country: data[i]["location"],
+          emotion: data[i]["emotion"]["pred"],
+          sentiment: data[i]["sentiment"]["pred"],
         });
         this.gridLinks.push({
           name: i.toString(),
