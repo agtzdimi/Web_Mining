@@ -29,7 +29,7 @@
               <div class="details">
                 <div class="title h5">Instagram Posts</div>
                 <div class="status paragraph-2 centralize">
-                  100
+                  {{ data["instagram"].length }}
                 </div>
               </div>
             </nb-card>
@@ -171,10 +171,11 @@
             Posts Per Country
           </nb-card-header>
           <nb-card-body>
-            <ngx-line-chart
-              [chartPrices]="countriesLineData"
+            <ngx-bar-chart
+              [barData]="countriesLineData"
               [titles]="postsPerCountry"
-            ></ngx-line-chart>
+            >
+            </ngx-bar-chart>
           </nb-card-body>
         </nb-card>
       </div>

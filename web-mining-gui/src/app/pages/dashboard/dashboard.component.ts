@@ -161,15 +161,21 @@ export class DashboardComponent implements OnInit {
           }
 
           // Countries Calculation
-          if (!this.countries.includes(data["tweets"][i]["location"])) {
+          if (
+            !this.countries.includes(data["tweets"][i]["location"]) &&
+            data["tweets"][i]["location"]
+          ) {
             this.countries.push(data["tweets"][i]["location"]);
           }
 
           // Posts Per Country Calculation
 
-          if (this.countryPosts[data["tweets"][i]["location"]]) {
+          if (
+            this.countryPosts[data["tweets"][i]["location"]] &&
+            data["tweets"][i]["location"]
+          ) {
             this.countryPosts[data["tweets"][i]["location"]] += 1;
-          } else {
+          } else if (data["tweets"][i]["location"]) {
             this.countryPosts[data["tweets"][i]["location"]] = 1;
           }
 

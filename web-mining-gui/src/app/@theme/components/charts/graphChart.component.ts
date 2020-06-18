@@ -5,13 +5,13 @@ import {
   OnChanges,
   OnDestroy,
   SimpleChanges,
-} from '@angular/core';
-import { GridCoordinatesService } from './gridCoordinates.service';
+} from "@angular/core";
+import { GridCoordinatesService } from "./gridCoordinates.service";
 
-import 'mapbox-echarts';
+import "mapbox-echarts";
 
 @Component({
-  selector: 'ngx-simulation-nodes',
+  selector: "ngx-simulation-nodes",
   template: ` <div echarts [options]="options" class="echarts"></div> `,
 })
 export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
@@ -70,25 +70,25 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
       Math,
       this.gridCoords.map(function (o) {
         return o.x;
-      }),
+      })
     );
     const minLatitude = Math.min.apply(
       Math,
       this.gridCoords.map(function (o) {
         return o.y;
-      }),
+      })
     );
     const maxLongitude = Math.max.apply(
       Math,
       this.gridCoords.map(function (o) {
         return o.x;
-      }),
+      })
     );
     const maxLatitude = Math.max.apply(
       Math,
       this.gridCoords.map(function (o) {
         return o.y;
-      }),
+      })
     );
 
     // Calculate graph's margins (10% from 'farthest' nodes)
@@ -118,7 +118,7 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
       zoom: 1, // 13 = region
       // bounds: [this.sw.lng, this.sw.lat, this.ne.lng, this.ne.lat],
       roam: true,
-      style: 'mapbox://styles/mapbox/light-v10', // stylesheet location
+      style: "mapbox://styles/mapbox/light-v10", // stylesheet location
     };
   }
 
@@ -130,10 +130,10 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     this.options = {
       // Timeline Element
       timeline: {
-        axisType: 'value',
+        axisType: "value",
         autoPlay: false,
         playInterval: 2000,
-        controlStyle: { position: 'left' },
+        controlStyle: { position: "left" },
         data: [],
       },
 
@@ -149,50 +149,50 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         // Base options of all series
         series: [
           {
-            id: 'SentimentGraph',
-            name: 'Sentiment Graph',
-            type: 'graph',
+            id: "SentimentGraph",
+            name: "Sentiment Graph",
+            type: "graph",
 
-            coordinateSystem: 'tmap',
+            coordinateSystem: "tmap",
 
             // roam: true, //'zoom',
             // layout: 'force', //'circular', 'force', 'node' (default)
-            symbol: 'circle', // 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+            symbol: "circle", // 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
             focusNodeAdjacency: true, // If true, then echarts highlights nodes' dependancies
-            edgeSymbol: ['none', 'none'],
+            edgeSymbol: ["none", "none"],
 
             itemStyle: {
-              borderColor: 'black',
+              borderColor: "black",
               borderWidth: 0.3,
-              borderType: 'solid',
+              borderType: "solid",
               opacity: 1,
             },
 
             lineStyle: {
-              color: 'black',
-              type: 'solid',
+              color: "black",
+              type: "solid",
               opacity: 0.8,
               curveness: 0,
             },
 
             tooltip: {
-              position: 'right',
+              position: "right",
               formatter: function (params) {
                 // Initialize label
-                let label = '';
-                if (params.dataType === 'node') {
+                let label = "";
+                if (params.dataType === "node") {
                   // Nodes' label
                   label =
-                    'Tweet No.: ' +
+                    "Tweet No.: " +
                     params.name +
-                    '<br/>' +
-                    'Country: ' +
+                    "<br/>" +
+                    "Country: " +
                     params.value[2] +
-                    '<br/>' +
-                    'Top Emotion: ' +
+                    "<br/>" +
+                    "Top Emotion: " +
                     params.value[3] +
-                    '<br/>' +
-                    'Sentiment: ' +
+                    "<br/>" +
+                    "Sentiment: " +
                     params.value[4];
                 }
 
@@ -220,7 +220,7 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
       this.options.timeline.data.push(timeStamp[hour]);
       // Add timeStamp's series to echart
       this.options.options.push(
-        this.getOption(graphData, graphCoord, graphLinks, hour),
+        this.getOption(graphData, graphCoord, graphLinks, hour)
       );
     }
   }
@@ -237,13 +237,13 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     //
     for (let node = 0; node < graphCoord.length; node++) {
       data.push({
-        name: graphCoord[node]['name'],
+        name: graphCoord[node]["name"],
         value: [
-          graphCoord[node]['x'],
-          graphCoord[node]['y'],
-          graphCoord[node]['country'],
-          graphCoord[node]['emotion'],
-          graphCoord[node]['sentiment'],
+          graphCoord[node]["x"],
+          graphCoord[node]["y"],
+          graphCoord[node]["country"],
+          graphCoord[node]["emotion"],
+          graphCoord[node]["sentiment"],
         ],
       });
     }
@@ -253,14 +253,14 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     // minimum and maximum values of the width
     const widthRange = [1, 5];
     // Get minimum and maximum values of the graph for the specific timeStamp
-    let widthMin = graphData[0][timeStamp]['lineLoad'];
-    let widthMax = graphData[0][timeStamp]['lineLoad'];
+    let widthMin = graphData[0][timeStamp]["lineLoad"];
+    let widthMax = graphData[0][timeStamp]["lineLoad"];
     for (let node = 1; node < graphLinks.length; node++) {
-      if (graphData[node][timeStamp]['lineLoad'] < widthMin) {
-        widthMin = graphData[node][timeStamp]['lineLoad'];
+      if (graphData[node][timeStamp]["lineLoad"] < widthMin) {
+        widthMin = graphData[node][timeStamp]["lineLoad"];
       }
-      if (graphData[node][timeStamp]['lineLoad'] > widthMax) {
-        widthMax = graphData[node][timeStamp]['lineLoad'];
+      if (graphData[node][timeStamp]["lineLoad"] > widthMax) {
+        widthMax = graphData[node][timeStamp]["lineLoad"];
       }
     }
     // Set links
@@ -269,17 +269,17 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
       // [a, b] => (b - a) * (x - min(x)) / (max(x) - min(x)) + a
       const edgeWidth = Math.round(
         ((widthRange[1] - widthRange[0]) *
-          (graphData[node][timeStamp]['lineLoad'] - widthMin)) /
+          (graphData[node][timeStamp]["lineLoad"] - widthMin)) /
           (widthMax - widthMin) +
-          widthRange[0],
+          widthRange[0]
       );
       // Push node's link to links array
       links.push({
-        name: graphLinks[node]['name'],
-        source: graphLinks[node]['source'],
-        target: graphLinks[node]['target'],
-        value: graphData[node][timeStamp]['lineLoad'],
-        lineLoad: graphData[node][timeStamp]['lineLoad'], // Custom variable that holds line's load
+        name: graphLinks[node]["name"],
+        source: graphLinks[node]["source"],
+        target: graphLinks[node]["target"],
+        value: graphData[node][timeStamp]["lineLoad"],
+        lineLoad: graphData[node][timeStamp]["lineLoad"], // Custom variable that holds line's load
         lineStyle: { width: edgeWidth },
       });
     }
@@ -297,14 +297,14 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         // Calculate nodes' color based on its value
         color: function (params) {
           // Change node's color in case the value is larger than the threshold
-          return '#c72c41';
+          return "#c72c41";
         },
       },
     });
 
     // Return series
     return {
-      title: { subtext: 'Timestamp: ' + graphData[0][timeStamp]['hour'] }, // Series subtitle
+      title: { subtext: "Timestamp: " + graphData[0][timeStamp]["hour"] }, // Series subtitle
       series: series,
     };
   }

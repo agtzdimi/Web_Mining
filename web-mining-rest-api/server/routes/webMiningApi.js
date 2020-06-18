@@ -55,12 +55,18 @@ exports.insertDocument = (req, res) => {
 
 exports.retrieveData = (req, res) => {
   mongoDbHelper
-    .collection("twitterResults")
+    .collection("tweeterResults2")
     .find({})
-    .then(results => {
-      res.json({
-        status: "success",
-        tweets: results
-      });
+    .then(twitterResults => {
+      mongoDbHelper
+        .collection("instagramResults")
+        .find({})
+        .then(instaResults => {
+          res.json({
+            status: "success",
+            tweets: twitterResults,
+            instagram: instaResults
+          });
+        });
     });
 };
