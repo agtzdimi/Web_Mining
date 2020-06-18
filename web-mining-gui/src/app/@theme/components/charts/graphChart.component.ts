@@ -15,7 +15,7 @@ import "mapbox-echarts";
   template: ` <div echarts [options]="options" class="echarts"></div> `,
 })
 export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() data;
+  @Input() dates;
 
   // Graph Data
   private gridData = [];
@@ -209,18 +209,13 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setData(graphData: any, graphCoord: any, graphLinks: any) {
-    // Get slider's values
-    const timeStamp = graphData[0].map(function (o) {
-      return o.hour;
-    });
-
     // Update echarts's options
-    for (let hour = 0; hour < timeStamp.length; hour++) {
+    for (let hour = 0; hour < this.dates.length; hour++) {
       // Add timeStamp to echarts's timeline (slider)
-      this.options.timeline.data.push(timeStamp[hour]);
+      this.options.timeline.data.push(this.dates[hour]);
       // Add timeStamp's series to echart
       this.options.options.push(
-        this.getOption(graphData, graphCoord, graphLinks, hour)
+        this.getOption(graphData, graphCoord, graphLinks, this.dates[hour])
       );
     }
   }
@@ -236,52 +231,32 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
     // Set echarts Data
     //
     for (let node = 0; node < graphCoord.length; node++) {
-      data.push({
-        name: graphCoord[node]["name"],
-        value: [
-          graphCoord[node]["x"],
-          graphCoord[node]["y"],
-          graphCoord[node]["country"],
-          graphCoord[node]["emotion"],
-          graphCoord[node]["sentiment"],
-        ],
-      });
+      if (timeStamp === graphCoord[node]["timestamp"]) {
+        data.push({
+          name: graphCoord[node]["name"],
+          value: [
+            graphCoord[node]["x"],
+            graphCoord[node]["y"],
+            graphCoord[node]["country"],
+            graphCoord[node]["emotion"],
+            graphCoord[node]["sentiment"],
+          ],
+        });
+      }
     }
 
-    // Set echarts Links
-    //
-    // minimum and maximum values of the width
-    const widthRange = [1, 5];
-    // Get minimum and maximum values of the graph for the specific timeStamp
-    let widthMin = graphData[0][timeStamp]["lineLoad"];
-    let widthMax = graphData[0][timeStamp]["lineLoad"];
-    for (let node = 1; node < graphLinks.length; node++) {
-      if (graphData[node][timeStamp]["lineLoad"] < widthMin) {
-        widthMin = graphData[node][timeStamp]["lineLoad"];
-      }
-      if (graphData[node][timeStamp]["lineLoad"] > widthMax) {
-        widthMax = graphData[node][timeStamp]["lineLoad"];
-      }
-    }
     // Set links
     for (let node = 0; node < graphLinks.length; node++) {
       // Map line's width of the egde to Width Range based on the edge's value
       // [a, b] => (b - a) * (x - min(x)) / (max(x) - min(x)) + a
-      const edgeWidth = Math.round(
-        ((widthRange[1] - widthRange[0]) *
-          (graphData[node][timeStamp]["lineLoad"] - widthMin)) /
-          (widthMax - widthMin) +
-          widthRange[0]
-      );
       // Push node's link to links array
-      links.push({
-        name: graphLinks[node]["name"],
-        source: graphLinks[node]["source"],
-        target: graphLinks[node]["target"],
-        value: graphData[node][timeStamp]["lineLoad"],
-        lineLoad: graphData[node][timeStamp]["lineLoad"], // Custom variable that holds line's load
-        lineStyle: { width: edgeWidth },
-      });
+      if (timeStamp === graphLinks[node]["timestamp"]) {
+        links.push({
+          name: graphLinks[node]["name"],
+          source: graphLinks[node]["source"],
+          target: graphLinks[node]["target"],
+        });
+      }
     }
 
     // Set echarts Series
@@ -301,10 +276,12 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         },
       },
     });
+    console.log(graphLinks);
+    console.log(timeStamp);
 
     // Return series
     return {
-      title: { subtext: "Timestamp: " + graphData[0][timeStamp]["hour"] }, // Series subtitle
+      title: { subtext: "Timestamp: " + timeStamp }, // Series subtitle
       series: series,
     };
   }

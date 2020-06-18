@@ -30,11 +30,13 @@ export class GridCoordinatesService {
           country: data[i]["location"],
           emotion: data[i]["emotion"]["pred"],
           sentiment: data[i]["sentiment"]["pred"],
+          timestamp: data[i]["timestamp"],
         });
         this.gridLinks.push({
           name: i.toString(),
           source: i.toString(),
           target: i.toString(),
+          timestamp: data[i]["timestamp"],
         });
       }
     }
@@ -43,7 +45,7 @@ export class GridCoordinatesService {
   setVoltage(nodesNumber) {
     for (let node = 0; node < nodesNumber; node++) {
       const tempTimelineData = [];
-      for (let hour = 0; hour < 1; hour++) {
+      for (let hour = 0; hour < 3; hour++) {
         tempTimelineData.push({
           hour: hour + 1,
           voltage: Math.round(Math.random() * 100 + 1),

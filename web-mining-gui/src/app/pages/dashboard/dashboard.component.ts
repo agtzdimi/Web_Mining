@@ -67,7 +67,6 @@ export class DashboardComponent implements OnInit {
     this.httpClient.get(url).subscribe(
       (data) => {
         console.log(data);
-        this.gridService.setCordinates(data["tweets"]);
         this.data = data;
         for (let i = 0; i < data["tweets"].length; i++) {
           // Age Group Calculation
@@ -233,6 +232,7 @@ export class DashboardComponent implements OnInit {
         this.postsPerCountry = Object.keys(this.countryPosts);
         this.postPerDate = Object.values(this.lineDates);
         this.dates = Object.keys(this.lineDates);
+        this.gridService.setCordinates(data["tweets"]);
         this.barData = Object.values(this.barChartData);
         this.barTitles = Object.keys(this.barChartData);
         this.mapDataSet = true;
