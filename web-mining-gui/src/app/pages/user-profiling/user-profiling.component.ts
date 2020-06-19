@@ -8,22 +8,16 @@ import { RetrieveDataService } from "../../@theme/components/charts/retrieveData
 })
 export class UserProfilingComponent {
   userProfileObj = {
-    totalMale: 0,
-    totalFemale: 0,
     totalMaleHate: 0,
     totalFemaleHate: 0,
     totalFemaleNotHate: 0,
     totalMaleNotHate: 0,
-    totalYoung: 0,
-    totalMiddleAged: 0,
-    totalElder: 0,
     totalYoungHate: 0,
     totalElderHate: 0,
     totalMiddleAgedHate: 0,
     totalElderNotHate: 0,
     totalMiddleAgedNotHate: 0,
     totalYoungNotHate: 0,
-    totalNonRecognized: 0,
     totalNonRecognizedNotHate: 0,
     totalNonRecognizedHate: 0,
     totalMaleNeutral: 0,
@@ -417,43 +411,37 @@ export class UserProfilingComponent {
     }
 
     this.ageBars = [
-      ["age", "Total", "Hate Speech", "Neutral"],
+      ["age", "Hate Speech", "Neutral"],
       [
         "Young",
-        this.userProfileObj["totalYoung"],
         this.userProfileObj["totalYoungHate"],
         this.userProfileObj["totalYoungNotHate"]
       ],
       [
         "Middle Aged",
-        this.userProfileObj["totalMiddleAged"],
         this.userProfileObj["totalMiddleAgedHate"],
         this.userProfileObj["totalMiddleAgedNotHate"]
       ],
       [
         "Elder",
-        this.userProfileObj["totalElder"],
         this.userProfileObj["totalElderHate"],
         this.userProfileObj["totalElderNotHate"]
       ]
     ];
     this.genderBars = [
-      ["gender", "Total", "Hate Speech", "Neutral"],
+      ["gender", "Hate Speech", "Neutral"],
       [
         "Male",
-        this.userProfileObj["totalMale"],
         this.userProfileObj["totalMaleHate"],
         this.userProfileObj["totalMaleNotHate"]
       ],
       [
         "Female",
-        this.userProfileObj["totalFemale"],
         this.userProfileObj["totalFemaleHate"],
         this.userProfileObj["totalFemaleNotHate"]
       ],
       [
         "Not Recognized",
-        this.userProfileObj["totalNonRecognized"],
         this.userProfileObj["totalNonRecognizedHate"],
         this.userProfileObj["totalNonRecognizedNotHate"]
       ]
