@@ -6,6 +6,7 @@ import { RetrieveDataService } from '../../@theme/components/charts/retrieveData
   selector: "ngx-gis",
   templateUrl: "./gis.component.html",
   styleUrls: ["./gis.component.scss"],
+  providers: [GridCoordinatesService]
 })
 export class GisComponent {
   dates = [];
