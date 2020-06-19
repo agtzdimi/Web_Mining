@@ -2,20 +2,21 @@
 Web Mining MSc Project
 
 ## Prerequisites
-To proceed with the application installation a MongoDB instance should exist with calculated results about the sentiment, emotion and user profiling JSONs. To create those messages the `model_prediction.py` python script in [Sentiment/Emotion git] (https://github.com/arvartho/immigration_sentiment_analysis/blob/master/model_prediction.py) where the user can defind the MongoDB URI to store the information.
+To proceed with the application installation a MongoDB instance should exist with calculated results about the sentiment, emotion and user profiling JSONs. To create those messages the `model_prediction.py` python script in [Sentiment/Emotion] (https://github.com/arvartho/immigration_sentiment_analysis/blob/master/model_prediction.py) where the user can defind the MongoDB URI to store the information.
 The same MongoDB URI should also be provided to the REST API through a `.env` file located in the root directory of web-mining-rest-api and contains the variable `MONGO_URI=<URI>`
 
 ## Installation
 To install the GUI the following steps should be executed:
 
-cd web-mining-gui
-npm i
-npm start
+- `cd web-mining-gui`
+- `npm i`
+- `npm start`
+
 To install the REST API server the following steps should be executed:
 
-cd advancedDB-rest-api
-npm i
-npm start
+- `cd advancedDB-rest-api`
+- `npm i`
+- `npm start`
 
 ## Highlights for NodeJS backend
 
