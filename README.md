@@ -37,6 +37,6 @@ This could be handy in case we wanted to calculate something from a python scrip
 
 #### Example Usage
 
-An API call will be constituted from '<IP>:<Port>/<Endpoint>'
+An API call will be constituted from \<IP\>:\<Port\>/\<Endpoint\>
 An example GET request can be seen below:
 - `curl --request GET http://localhost:9000/web-mining/rest/api/v1/insert_document`
