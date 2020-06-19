@@ -1,0 +1,25 @@
+<nb-card *ngIf="data === undefined" [nbSpinner]="data === undefined" nbSpinnerStatus="success">
+  <nb-card-body>
+    Loading Data...
+  </nb-card-body>
+</nb-card>
+
+<div class="row" *ngIf="data">
+  <div class="col-xxl-12">
+
+
+    <div class="row" *ngIf="mapDataSet">
+      <div class="col-md-12">
+        <nb-card class="cards-container" size="large">
+          <nb-card-header>
+            Spreading of Tweets GIS
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-simulation-nodes [dates]="dates"></ngx-simulation-nodes>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+  </div>
+</div>

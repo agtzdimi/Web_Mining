@@ -3,13 +3,17 @@ import {
   NbMenuModule,
   NbCardModule,
   NbIconModule,
+  NbSpinnerModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { FormsModule } from '@angular/forms';
 import { PagesRoutingModule } from './pages-routing.module';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { GeneralComponent } from './general/general.component';
+import { EmotionComponent } from './emotion/emotion.component';
+import { GisComponent } from './gis/gis.component';
+import { UserProfilingComponent } from './user-profiling/user-profiling.component';
 
 @NgModule({
   imports: [
@@ -19,7 +23,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NbMenuModule,
     NbIconModule,
     NbCardModule,
+    NbSpinnerModule
   ],
-  declarations: [PagesComponent, DashboardComponent],
+  declarations: [PagesComponent, GeneralComponent, EmotionComponent, GisComponent, UserProfilingComponent],
 })
 export class PagesModule {}

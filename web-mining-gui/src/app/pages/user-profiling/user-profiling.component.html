@@ -1,0 +1,40 @@
+<nb-card *ngIf="data === undefined" [nbSpinner]="data === undefined" nbSpinnerStatus="success">
+  <nb-card-body>
+    Loading Data...
+  </nb-card-body>
+</nb-card>
+
+<div class="row" *ngIf="data">
+  <div class="col-xxl-12">
+
+    <div class="row">
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Hate Speech Per Demographic Category
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="ageBars"
+              [barData]="ageBars"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Hate Speech Per User Gender
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="genderBars"
+              [barData]="genderBars"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    
+  </div>
+</div>
