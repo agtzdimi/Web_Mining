@@ -1,44 +1,45 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
 import { GridCoordinatesService } from "../../@theme/components/charts/gridCoordinates.service";
+import { RetrieveDataService } from '../../@theme/components/charts/retrieveData.service';
 
 @Component({
   selector: "ngx-gis",
   templateUrl: "./gis.component.html",
   styleUrls: ["./gis.component.scss"],
 })
-export class GisComponent implements OnInit {
+export class GisComponent {
   dates = [];
   data: any;
   mapDataSet: boolean = false;
   lineDates = {};
 
   constructor(
-    private httpClient: HttpClient,
+    private retrieveDataService: RetrieveDataService,
     private gridService: GridCoordinatesService
-  ) {}
-
-  ngOnInit() {
-    const url = "http://localhost:9000/web-mining/rest/api/v1/retrieve_data";
-    this.httpClient.get(url).subscribe(
+  ) {
+    if(this.retrieveDataService.chartData) {
+      this.onDataloaded();
+    }
+    this.retrieveDataService.chartDataEmmitter.subscribe(
       (data) => {
-        this.data = data;
-        for (let i = 0; i < data["tweets"].length; i++) {
+        this.onDataloaded();
+      }
+    )
+  }
+
+  onDataloaded() {
+    this.data = this.retrieveDataService.chartData;
+        for (let i = 0; i < this.data["tweets"].length; i++) {
           // Posts Per Date Calculation
-          if (this.lineDates[data["tweets"][i]["timestamp"]]) {
-            this.lineDates[data["tweets"][i]["timestamp"]] += 1;
+          if (this.lineDates[this.data["tweets"][i]["timestamp"]]) {
+            this.lineDates[this.data["tweets"][i]["timestamp"]] += 1;
           } else {
-            this.lineDates[data["tweets"][i]["timestamp"]] = 1;
+            this.lineDates[this.data["tweets"][i]["timestamp"]] = 1;
           }
         }
 
         this.dates = Object.keys(this.lineDates);
-        this.gridService.setCordinates(data["tweets"]);
+        this.gridService.setCordinates(this.data["tweets"]);
         this.mapDataSet = true;
-      },
-      (error) => {
-        // console.log(error);
-      }
-    );
   }
 }

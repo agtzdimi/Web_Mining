@@ -1,13 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { GridCoordinatesService } from "../../@theme/components/charts/gridCoordinates.service";
+import { Component } from "@angular/core";
+import { RetrieveDataService } from '../../@theme/components/charts/retrieveData.service';
 
 @Component({
   selector: "ngx-general",
   templateUrl: "./general.component.html",
   styleUrls: ["./general.component.scss"],
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent  {
   postsPerCountry = [];
   countriesLineData = [];
   postPerDate = [];
@@ -19,39 +18,45 @@ export class GeneralComponent implements OnInit {
   mapDataSet: boolean = false;
 
   constructor(
-    private httpClient: HttpClient) {}
+    private retrieveDataService: RetrieveDataService) {
+      if(this.retrieveDataService.chartData) {
+        this.onDataloaded();
+      }
+      this.retrieveDataService.chartDataEmmitter.subscribe(
+        (data) => {
+          this.onDataloaded();
+        }
+      )
+    }
 
-  ngOnInit() {
-    const url = "http://localhost:9000/web-mining/rest/api/v1/retrieve_data";
-    this.httpClient.get(url).subscribe(
-      (data) => {
-        this.data = data;
-        for (let i = 0; i < data["tweets"].length; i++) {
+    onDataloaded() {
+    this.data = this.retrieveDataService.chartData;
+        for (let i = 0; i < this.data["tweets"].length; i++) {
 
           // Countries Calculation
           if (
-            !this.countries.includes(data["tweets"][i]["location"]) &&
-            data["tweets"][i]["location"]
+            !this.countries.includes(this.data["tweets"][i]["location"]) &&
+            this.data["tweets"][i]["location"]
           ) {
-            this.countries.push(data["tweets"][i]["location"]);
+            this.countries.push(this.data["tweets"][i]["location"]);
           }
 
           // Posts Per Country Calculation
 
           if (
-            this.countryPosts[data["tweets"][i]["location"]] &&
-            data["tweets"][i]["location"]
+            this.countryPosts[this.data["tweets"][i]["location"]] &&
+            this.data["tweets"][i]["location"]
           ) {
-            this.countryPosts[data["tweets"][i]["location"]] += 1;
-          } else if (data["tweets"][i]["location"]) {
-            this.countryPosts[data["tweets"][i]["location"]] = 1;
+            this.countryPosts[this.data["tweets"][i]["location"]] += 1;
+          } else if (this.data["tweets"][i]["location"]) {
+            this.countryPosts[this.data["tweets"][i]["location"]] = 1;
           }
 
           // Posts Per Date Calculation
-          if (this.lineDates[data["tweets"][i]["timestamp"]]) {
-            this.lineDates[data["tweets"][i]["timestamp"]] += 1;
+          if (this.lineDates[this.data["tweets"][i]["timestamp"]]) {
+            this.lineDates[this.data["tweets"][i]["timestamp"]] += 1;
           } else {
-            this.lineDates[data["tweets"][i]["timestamp"]] = 1;
+            this.lineDates[this.data["tweets"][i]["timestamp"]] = 1;
           }
         }
 
@@ -60,10 +65,5 @@ export class GeneralComponent implements OnInit {
         this.postPerDate = Object.values(this.lineDates);
         this.dates = Object.keys(this.lineDates);
         this.mapDataSet = true;
-      },
-      (error) => {
-        // console.log(error);
-      }
-    );
   }
 }

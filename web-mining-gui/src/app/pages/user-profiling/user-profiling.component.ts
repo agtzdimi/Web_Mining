@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { RetrieveDataService } from '../../@theme/components/charts/retrieveData.service';
 
 @Component({
   selector: "ngx-user-profiling",
   templateUrl: "./user-profiling.component.html",
   styleUrls: ["./user-profiling.component.scss"],
 })
-export class UserProfilingComponent implements OnInit {
+export class UserProfilingComponent {
   userProfileObj = {
     totalMale: 0,
     totalFemale: 0,
@@ -32,32 +32,39 @@ export class UserProfilingComponent implements OnInit {
   genderBars: (string | number)[][];
   mapDataSet: boolean = false;
 
-  constructor(private httpClient: HttpClient) {}
-
-  ngOnInit() {
-    const url = "http://localhost:9000/web-mining/rest/api/v1/retrieve_data";
-    this.httpClient.get(url).subscribe(
+  constructor(private retrieveDataService: RetrieveDataService) {
+    if(this.retrieveDataService.chartData) {
+      this.onDataloaded();
+    }
+    this.retrieveDataService.chartDataEmmitter.subscribe(
       (data) => {
-        this.data = data;
-        for (let i = 0; i < data["tweets"].length; i++) {
+        this.onDataloaded();
+      }
+    )
+  }
+
+  onDataloaded() {
+
+        this.data = this.retrieveDataService.chartData;
+        for (let i = 0; i < this.data["tweets"].length; i++) {
           // Age Group Calculation
-          if (data["tweets"][i]["age_group"] === "Young") {
+          if (this.data["tweets"][i]["age_group"] === "Young") {
             this.userProfileObj["totalYoung"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalYoungNotHate"]++;
             } else {
               this.userProfileObj["totalYoungHate"]++;
             }
-          } else if (data["tweets"][i]["age_group"] === "Middle_aged") {
+          } else if (this.data["tweets"][i]["age_group"] === "Middle_aged") {
             this.userProfileObj["totalMiddleAged"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalMiddleAgedNotHate"]++;
             } else {
               this.userProfileObj["totalMiddleAgedHate"]++;
             }
-          } else if (data["tweets"][i]["age_group"] === "Elder") {
+          } else if (this.data["tweets"][i]["age_group"] === "Elder") {
             this.userProfileObj["totalElder"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalElderNotHate"]++;
             } else {
               this.userProfileObj["totalElderHate"]++;
@@ -65,23 +72,23 @@ export class UserProfilingComponent implements OnInit {
           }
 
           // Gender Calculation
-          if (data["tweets"][i]["gender"] === "Male") {
+          if (this.data["tweets"][i]["gender"] === "Male") {
             this.userProfileObj["totalMale"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalMaleNotHate"]++;
             } else {
               this.userProfileObj["totalMaleHate"]++;
             }
-          } else if (data["tweets"][i]["gender"] === "Female") {
+          } else if (this.data["tweets"][i]["gender"] === "Female") {
             this.userProfileObj["totalFemale"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalFemaleNotHate"]++;
             } else {
               this.userProfileObj["totalFemaleHate"]++;
             }
-          } else if (data["tweets"][i]["gender"] === "nan") {
+          } else if (this.data["tweets"][i]["gender"] === "nan") {
             this.userProfileObj["totalNonRecognized"]++;
-            if (data["tweets"][i]["hate_speech"] === "0") {
+            if (this.data["tweets"][i]["hate_speech"] === "1") {
               this.userProfileObj["totalNonRecognizedNotHate"]++;
             } else {
               this.userProfileObj["totalNonRecognizedHate"]++;
@@ -132,10 +139,5 @@ export class UserProfilingComponent implements OnInit {
           ],
         ];
         this.mapDataSet = true;
-      },
-      (error) => {
-        // console.log(error);
-      }
-    );
   }
 }

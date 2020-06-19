@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { RetrieveDataService } from '../../@theme/components/charts/retrieveData.service';
 
 @Component({
   selector: "ngx-emotion",
   templateUrl: "./emotion.component.html",
   styleUrls: ["./emotion.component.scss"],
 })
-export class EmotionComponent implements OnInit {
+export class EmotionComponent {
   twitterPieSeriesData = [];
   instaPieSeriesData = [];
   twitterBarChartData = {
@@ -41,54 +41,60 @@ export class EmotionComponent implements OnInit {
   data: any;
   mapDataSet: boolean = false;
 
-  constructor(private httpClient: HttpClient) {}
-
-  ngOnInit() {
-    const url = "http://localhost:9000/web-mining/rest/api/v1/retrieve_data";
-    this.httpClient.get(url).subscribe(
+  constructor(private retrieveDataService: RetrieveDataService) {
+    if(this.retrieveDataService.chartData) {
+      this.onDataloaded();
+    }
+    this.retrieveDataService.chartDataEmmitter.subscribe(
       (data) => {
-        this.data = data;
-        for (let i = 0; i < data["tweets"].length; i++) {
+        this.onDataloaded();
+      }
+    )
+  }
+
+  onDataloaded() {
+      this.data = this.retrieveDataService.chartData;
+        for (let i = 0; i < this.data["tweets"].length; i++) {
           
           // Sentiment Calculation
-          if (data["tweets"][i]["sentiment"]["pred"] === "neutral") {
+          if (this.data["tweets"][i]["sentiment"]["pred"] === "neutral") {
             this.twitterPieSeriesData.push({ sentiment: "Neutral" });
-          } else if (data["tweets"][i]["sentiment"]["pred"] === "positive") {
+          } else if (this.data["tweets"][i]["sentiment"]["pred"] === "positive") {
             this.twitterPieSeriesData.push({ sentiment: "Positive" });
           } else {
             this.twitterPieSeriesData.push({ sentiment: "Negative" });
           }
 
           // Emotion Calculation
-          if (data["tweets"][i]["emotion"]["pred"].includes("joy")) {
+          if (this.data["tweets"][i]["emotion"]["pred"].includes("joy")) {
             this.twitterBarChartData["joy"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("anger")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("anger")) {
             this.twitterBarChartData["anger"] += 1;
           } else if (
-            data["tweets"][i]["emotion"]["pred"].includes("anticipation")
+            this.data["tweets"][i]["emotion"]["pred"].includes("anticipation")
           ) {
             this.twitterBarChartData["anticipation"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("disgust")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("disgust")) {
             this.twitterBarChartData["disgust"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("fear")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("fear")) {
             this.twitterBarChartData["fear"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("love")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("love")) {
             this.twitterBarChartData["love"] += 1;
           } else if (
-            data["tweets"][i]["emotion"]["pred"].includes("optimism")
+            this.data["tweets"][i]["emotion"]["pred"].includes("optimism")
           ) {
             this.twitterBarChartData["optimism"] += 1;
           } else if (
-            data["tweets"][i]["emotion"]["pred"].includes("pessimism")
+            this.data["tweets"][i]["emotion"]["pred"].includes("pessimism")
           ) {
             this.twitterBarChartData["pessimism"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("sadness")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("sadness")) {
             this.twitterBarChartData["sadness"] += 1;
           } else if (
-            data["tweets"][i]["emotion"]["pred"].includes("surprise")
+            this.data["tweets"][i]["emotion"]["pred"].includes("surprise")
           ) {
             this.twitterBarChartData["surprise"] += 1;
-          } else if (data["tweets"][i]["emotion"]["pred"].includes("trust")) {
+          } else if (this.data["tweets"][i]["emotion"]["pred"].includes("trust")) {
             this.twitterBarChartData["trust"] += 1;
           }
 
@@ -96,47 +102,47 @@ export class EmotionComponent implements OnInit {
 
         // Instagram
 
-        for (let i = 0; i < data["instagram"].length; i++) {
+        for (let i = 0; i < this.data["instagram"].length; i++) {
           
           // Sentiment Calculation
-          if (data["instagram"][i]["sentiment"]["pred"] === "neutral") {
+          if (this.data["instagram"][i]["sentiment"]["pred"] === "neutral") {
             this.instaPieSeriesData.push({ sentiment: "Neutral" });
-          } else if (data["instagram"][i]["sentiment"]["pred"] === "positive") {
+          } else if (this.data["instagram"][i]["sentiment"]["pred"] === "positive") {
             this.instaPieSeriesData.push({ sentiment: "Positive" });
           } else {
             this.instaPieSeriesData.push({ sentiment: "Negative" });
           }
 
           // Emotion Calculation
-          if (data["instagram"][i]["emotion"]["pred"].includes("joy")) {
+          if (this.data["instagram"][i]["emotion"]["pred"].includes("joy")) {
             this.instaBarChartData["joy"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("anger")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("anger")) {
             this.instaBarChartData["anger"] += 1;
           } else if (
-            data["instagram"][i]["emotion"]["pred"].includes("anticipation")
+            this.data["instagram"][i]["emotion"]["pred"].includes("anticipation")
           ) {
             this.instaBarChartData["anticipation"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("disgust")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("disgust")) {
             this.instaBarChartData["disgust"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("fear")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("fear")) {
             this.instaBarChartData["fear"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("love")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("love")) {
             this.instaBarChartData["love"] += 1;
           } else if (
-            data["instagram"][i]["emotion"]["pred"].includes("optimism")
+            this.data["instagram"][i]["emotion"]["pred"].includes("optimism")
           ) {
             this.instaBarChartData["optimism"] += 1;
           } else if (
-            data["instagram"][i]["emotion"]["pred"].includes("pessimism")
+            this.data["instagram"][i]["emotion"]["pred"].includes("pessimism")
           ) {
             this.instaBarChartData["pessimism"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("sadness")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("sadness")) {
             this.instaBarChartData["sadness"] += 1;
           } else if (
-            data["instagram"][i]["emotion"]["pred"].includes("surprise")
+            this.data["instagram"][i]["emotion"]["pred"].includes("surprise")
           ) {
             this.instaBarChartData["surprise"] += 1;
-          } else if (data["instagram"][i]["emotion"]["pred"].includes("trust")) {
+          } else if (this.data["instagram"][i]["emotion"]["pred"].includes("trust")) {
             this.instaBarChartData["trust"] += 1;
           }
 
@@ -145,10 +151,5 @@ export class EmotionComponent implements OnInit {
         this.twitterBarData = Object.values(this.twitterBarChartData);
         this.barTitles = Object.keys(this.twitterBarChartData);
         this.mapDataSet = true;
-      },
-      (error) => {
-        // console.log(error);
-      }
-    );
   }
 }
