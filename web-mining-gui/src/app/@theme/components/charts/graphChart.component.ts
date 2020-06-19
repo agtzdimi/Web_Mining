@@ -276,8 +276,6 @@ export class GraphChartComponent implements OnInit, OnDestroy, OnChanges {
         },
       },
     });
-    console.log(graphLinks);
-    console.log(timeStamp);
 
     // Return series
     return {
