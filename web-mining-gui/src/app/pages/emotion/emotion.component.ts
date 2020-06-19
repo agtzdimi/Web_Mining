@@ -7,8 +7,9 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./emotion.component.scss"],
 })
 export class EmotionComponent implements OnInit {
-  pieSeriesData = [];
-  barChartData = {
+  twitterPieSeriesData = [];
+  instaPieSeriesData = [];
+  twitterBarChartData = {
     anger: 0,
     anticipation: 0,
     disgust: 0,
@@ -21,7 +22,21 @@ export class EmotionComponent implements OnInit {
     surprise: 0,
     trust: 0,
   };
-  barData = [];
+  instaBarChartData = {
+    anger: 0,
+    anticipation: 0,
+    disgust: 0,
+    fear: 0,
+    joy: 0,
+    love: 0,
+    optimism: 0,
+    pessimism: 0,
+    sadness: 0,
+    surprise: 0,
+    trust: 0,
+  };
+  twitterBarData = [];
+  instaBarData = [];
   barTitles = [];
   data: any;
   mapDataSet: boolean = false;
@@ -37,49 +52,98 @@ export class EmotionComponent implements OnInit {
           
           // Sentiment Calculation
           if (data["tweets"][i]["sentiment"]["pred"] === "neutral") {
-            this.pieSeriesData.push({ sentiment: "Neutral" });
+            this.twitterPieSeriesData.push({ sentiment: "Neutral" });
           } else if (data["tweets"][i]["sentiment"]["pred"] === "positive") {
-            this.pieSeriesData.push({ sentiment: "Positive" });
+            this.twitterPieSeriesData.push({ sentiment: "Positive" });
           } else {
-            this.pieSeriesData.push({ sentiment: "Negative" });
+            this.twitterPieSeriesData.push({ sentiment: "Negative" });
           }
 
           // Emotion Calculation
           if (data["tweets"][i]["emotion"]["pred"].includes("joy")) {
-            this.barChartData["joy"] += 1;
+            this.twitterBarChartData["joy"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("anger")) {
-            this.barChartData["anger"] += 1;
+            this.twitterBarChartData["anger"] += 1;
           } else if (
             data["tweets"][i]["emotion"]["pred"].includes("anticipation")
           ) {
-            this.barChartData["anticipation"] += 1;
+            this.twitterBarChartData["anticipation"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("disgust")) {
-            this.barChartData["disgust"] += 1;
+            this.twitterBarChartData["disgust"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("fear")) {
-            this.barChartData["fear"] += 1;
+            this.twitterBarChartData["fear"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("love")) {
-            this.barChartData["love"] += 1;
+            this.twitterBarChartData["love"] += 1;
           } else if (
             data["tweets"][i]["emotion"]["pred"].includes("optimism")
           ) {
-            this.barChartData["optimism"] += 1;
+            this.twitterBarChartData["optimism"] += 1;
           } else if (
             data["tweets"][i]["emotion"]["pred"].includes("pessimism")
           ) {
-            this.barChartData["pessimism"] += 1;
+            this.twitterBarChartData["pessimism"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("sadness")) {
-            this.barChartData["sadness"] += 1;
+            this.twitterBarChartData["sadness"] += 1;
           } else if (
             data["tweets"][i]["emotion"]["pred"].includes("surprise")
           ) {
-            this.barChartData["surprise"] += 1;
+            this.twitterBarChartData["surprise"] += 1;
           } else if (data["tweets"][i]["emotion"]["pred"].includes("trust")) {
-            this.barChartData["trust"] += 1;
+            this.twitterBarChartData["trust"] += 1;
           }
 
         }
-        this.barData = Object.values(this.barChartData);
-        this.barTitles = Object.keys(this.barChartData);
+
+        // Instagram
+
+        for (let i = 0; i < data["instagram"].length; i++) {
+          
+          // Sentiment Calculation
+          if (data["instagram"][i]["sentiment"]["pred"] === "neutral") {
+            this.instaPieSeriesData.push({ sentiment: "Neutral" });
+          } else if (data["instagram"][i]["sentiment"]["pred"] === "positive") {
+            this.instaPieSeriesData.push({ sentiment: "Positive" });
+          } else {
+            this.instaPieSeriesData.push({ sentiment: "Negative" });
+          }
+
+          // Emotion Calculation
+          if (data["instagram"][i]["emotion"]["pred"].includes("joy")) {
+            this.instaBarChartData["joy"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("anger")) {
+            this.instaBarChartData["anger"] += 1;
+          } else if (
+            data["instagram"][i]["emotion"]["pred"].includes("anticipation")
+          ) {
+            this.instaBarChartData["anticipation"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("disgust")) {
+            this.instaBarChartData["disgust"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("fear")) {
+            this.instaBarChartData["fear"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("love")) {
+            this.instaBarChartData["love"] += 1;
+          } else if (
+            data["instagram"][i]["emotion"]["pred"].includes("optimism")
+          ) {
+            this.instaBarChartData["optimism"] += 1;
+          } else if (
+            data["instagram"][i]["emotion"]["pred"].includes("pessimism")
+          ) {
+            this.instaBarChartData["pessimism"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("sadness")) {
+            this.instaBarChartData["sadness"] += 1;
+          } else if (
+            data["instagram"][i]["emotion"]["pred"].includes("surprise")
+          ) {
+            this.instaBarChartData["surprise"] += 1;
+          } else if (data["instagram"][i]["emotion"]["pred"].includes("trust")) {
+            this.instaBarChartData["trust"] += 1;
+          }
+
+        }
+        this.instaBarData = Object.values(this.instaBarChartData);
+        this.twitterBarData = Object.values(this.twitterBarChartData);
+        this.barTitles = Object.keys(this.twitterBarChartData);
         this.mapDataSet = true;
       },
       (error) => {

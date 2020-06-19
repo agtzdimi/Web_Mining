@@ -11,21 +11,49 @@
       <div class="col-md-6" *ngIf="mapDataSet">
         <nb-card class="cards-container">
           <nb-card-header>
-            Total Sentiment
+            Total Sentiment (Twitter)
           </nb-card-header>
           <nb-card-body>
-            <ngx-pie-chart [seriesData]="pieSeriesData"></ngx-pie-chart>
+            <ngx-pie-chart [seriesData]="twitterPieSeriesData"></ngx-pie-chart>
           </nb-card-body>
         </nb-card>
       </div>
       <div class="col-md-6" *ngIf="mapDataSet">
         <nb-card class="cards-container">
           <nb-card-header>
-            Total Emotion
+            Total Sentiment (Instagram)
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-pie-chart [seriesData]="instaPieSeriesData"></ngx-pie-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" *ngIf="mapDataSet">
+        <nb-card class="cards-container">
+          <nb-card-header>
+            Total Emotion (Twitter)
           </nb-card-header>
           <nb-card-body>
             <ngx-bar-chart
-              [barData]="barData"
+              [barData]="twitterBarData"
+              [titles]="barTitles"
+              [axisTitle]="'No. of Posts'"
+            >
+            </ngx-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6" *ngIf="mapDataSet">
+        <nb-card class="cards-container">
+          <nb-card-header>
+            Total Emotion (Instagram)
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-bar-chart
+              [barData]="instaBarData"
               [titles]="barTitles"
               [axisTitle]="'No. of Posts'"
             >
