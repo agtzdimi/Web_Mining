@@ -1,4 +1,8 @@
-<nb-card *ngIf="data === undefined" [nbSpinner]="data === undefined" nbSpinnerStatus="success">
+<nb-card
+  *ngIf="data === undefined"
+  [nbSpinner]="data === undefined"
+  nbSpinnerStatus="success"
+>
   <nb-card-body>
     Loading Data...
   </nb-card-body>
@@ -6,7 +10,6 @@
 
 <div class="row" *ngIf="data">
   <div class="col-xxl-12">
-
     <div class="row">
       <div class="col-md-6">
         <nb-card>
@@ -35,6 +38,63 @@
         </nb-card>
       </div>
     </div>
-    
+
+    <div class="row">
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Sentiment Per Demographic Category
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="sentimentBarsAge"
+              [barData]="sentimentBarsAge"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Sentiment Per User Gender
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="sentimentBarsGender"
+              [barData]="sentimentBarsGender"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Emotion Per Demographic Category
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="emotionBarsAge"
+              [barData]="emotionBarsAge"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-md-6">
+        <nb-card>
+          <nb-card-header>
+            Emotion Per User Gender
+          </nb-card-header>
+          <nb-card-body>
+            <ngx-double-axis-bar-chart
+              *ngIf="emotionBarsGender"
+              [barData]="emotionBarsGender"
+            ></ngx-double-axis-bar-chart>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
   </div>
 </div>

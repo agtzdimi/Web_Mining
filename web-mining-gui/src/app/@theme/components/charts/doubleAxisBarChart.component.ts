@@ -1,8 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 
 @Component({
-  selector: 'ngx-double-axis-bar-chart',
-  template: ` <div echarts [options]="options" class="echart"></div> `,
+  selector: "ngx-double-axis-bar-chart",
+  template: `
+    <div echarts [options]="options" class="echart"></div>
+  `
 })
 export class DoubleAxisBarChartComponent implements OnChanges {
   @Input() barData;
@@ -17,46 +19,50 @@ export class DoubleAxisBarChartComponent implements OnChanges {
   constructor() {}
 
   afterDataRecieved() {
+    let series = [];
+    for (let i = 0; i < this.barData[0].length - 1; i++) {
+      series.push({ type: "bar" });
+    }
     this.options = {
       legend: {
         textStyle: {
-          color: 'white',
-        },
+          color: "white"
+        }
       },
       tooltip: {},
       dataset: {
-        source: this.barData,
+        source: this.barData
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         axisLine: {
           lineStyle: {
-            color: 'white',
-          },
+            color: "white"
+          }
         },
         axisLabel: {
-          color: 'white',
+          color: "white",
           textStyle: {
-            color: 'white',
-          },
-        },
+            color: "white"
+          }
+        }
       },
       yAxis: {
         axisLine: {
           lineStyle: {
-            color: 'white',
-          },
+            color: "white"
+          }
         },
         axisLabel: {
-          color: 'white',
+          color: "white",
           textStyle: {
-            color: 'white',
-          },
-        },
+            color: "white"
+          }
+        }
       },
       // Declare several bar series, each will be mapped
       // to a column of dataset.source by default.
-      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }],
+      series: series
     };
   }
 }
